@@ -164,7 +164,7 @@ CREATE TABLE public.star (
     name character varying(30),
     has_planets boolean NOT NULL,
     star_type text,
-    type_id integer,
+    star_type_id integer,
     galaxy_name text,
     galaxy_id integer
 );
@@ -199,7 +199,7 @@ ALTER SEQUENCE public.star_star_id_seq OWNED BY public.star.star_id;
 --
 
 CREATE TABLE public.star_type (
-    type_id integer NOT NULL,
+    star_type_id integer NOT NULL,
     name character varying(20) NOT NULL,
     cycle text NOT NULL
 );
@@ -226,7 +226,7 @@ ALTER TABLE public.star_type_type_id_seq OWNER TO freecodecamp;
 -- Name: star_type_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: freecodecamp
 --
 
-ALTER SEQUENCE public.star_type_type_id_seq OWNED BY public.star_type.type_id;
+ALTER SEQUENCE public.star_type_type_id_seq OWNED BY public.star_type.star_type_id;
 
 
 --
@@ -258,10 +258,10 @@ ALTER TABLE ONLY public.star ALTER COLUMN star_id SET DEFAULT nextval('public.st
 
 
 --
--- Name: star_type type_id; Type: DEFAULT; Schema: public; Owner: freecodecamp
+-- Name: star_type star_type_id; Type: DEFAULT; Schema: public; Owner: freecodecamp
 --
 
-ALTER TABLE ONLY public.star_type ALTER COLUMN type_id SET DEFAULT nextval('public.star_type_type_id_seq'::regclass);
+ALTER TABLE ONLY public.star_type ALTER COLUMN star_type_id SET DEFAULT nextval('public.star_type_type_id_seq'::regclass);
 
 
 --
@@ -450,11 +450,19 @@ ALTER TABLE ONLY public.star
 
 
 --
+-- Name: star_type star_type_name_key; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.star_type
+    ADD CONSTRAINT star_type_name_key UNIQUE (name);
+
+
+--
 -- Name: star_type star_type_pkey; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
 --
 
 ALTER TABLE ONLY public.star_type
-    ADD CONSTRAINT star_type_pkey PRIMARY KEY (type_id);
+    ADD CONSTRAINT star_type_pkey PRIMARY KEY (star_type_id);
 
 
 --
